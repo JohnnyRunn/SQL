@@ -1,0 +1,41 @@
+In this SQL project, I am displaying and analyzing inventory, price, and review data for a store
+
+This code shows all items in the store in ascending order (by item id)
+SELECT *
+FROM superstore
+ORDER BY item_id asc;
+
+In this section we can see all items priced over $100 in ascending order
+SELECT *
+FROM superstore
+WHERE price > 100
+ORDER BY price asc;
+
+This code displays all items in stock, filtering out anything that is out of stock
+SELECT *
+FROM superstore
+WHERE stock_quantity >= 1
+ORDER BY stock_quantity asc;
+
+Here we can see the total number of items in the store
+SELECT SUM(stock_quantity)
+FROM superstore;
+
+Next we see the value of all items combined
+SELECT SUM(price * stock_quantity)
+FROM superstore;
+
+The average price for electronic items
+SELECT AVG(price)
+FROM superstore
+WHERE category='Electronics';
+
+The total number of items in stock in the Kitchen Supplies category
+SELECT SUM(stock_quantity)
+FROM superstore
+WHERE category='Kitchen Supplies';
+
+SELECT *
+FROM superstore
+WHERE average_rating > 4.0
+ORDER BY average_rating asc;
