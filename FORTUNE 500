@@ -1,0 +1,49 @@
+Lists all info in the table
+SELECT *
+FROM fortune_companies;
+
+Counts how many entries are in the table
+SELECT COUNT (*)
+FROM fortune_companies
+
+Total number of all employees in the table
+SELECT SUM(employees)
+FROM fortune_companies;
+
+Companies are sorted from largest to smallest
+SELECT *
+FROM fortune_companies
+ORDER BY employees desc;
+
+Organizes companies by most PTO offered
+SELECT *
+FROM fortune_companies
+ORDER BY paid_time_off_days desc;
+
+Organizes companies by Total Revenue rounded 2 decimal places
+SELECT company_name
+, ROUND(revenue*1,2) AS TotalRevenue
+FROM fortune_companies
+ORDER BY TotalRevenue desc;
+
+Organizes companies that have at least 10 weeks of maternity, as well as employee tenure of at least 6. Also organizes them by most PTO
+SELECT company_name, industry, paid_time_off_days, maternity_leave_weeks, avg_employee_tenure
+FROM fortune_companies
+WHERE maternity_leave_weeks >10 AND avg_employee_tenure >6
+ORDER BY paid_time_off_days desc;
+
+Organizes the businesses into industry categories, and then calculates the avg amount of employees per industry
+SELECT industry, AVG(employees) AS AvgEmployee
+FROM fortune_companies
+GROUP BY industry
+HAVING AvgEmployee >1
+ORDER BY AvgEmployee desc;
+
+Calculates how many of the 43 companies offer 10,15, and 20 PTO days
+SELECT COUNT(*),
+CASE WHEN paid_time_off_days >=20 THEN "20+ Days Off"
+WHEN paid_time_off_days >= 15 THEN "15 Days Off"
+WHEN paid_time_off_days >=10 THEN "10 Days Off"
+ELSE "Less Than 20 Days" END AS "PTO"
+FROM fortune_companies
+GROUP BY PTO;
