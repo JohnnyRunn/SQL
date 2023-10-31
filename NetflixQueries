@@ -1,0 +1,50 @@
+#In this SQL code, I'm querying a database with 2 tables thats holding Netflix data
+
+/# This query shows me what info is in the first table, with a limit of 5 reponses
+SELECT * 
+FROM netflix_titles_info LIMIT 5;
+
+/# This query shows me what info is in the second table, with a limit of 5 reponses
+SELECT * 
+FROM netflix_people LIMIT 5;
+
+/# This query joins both tables on "Show ID" and lists the ID, Title, Rating, and Release Year, and then sorts them from newest to oldest
+SELECT people.show_id, titles.title, titles.rating, titles.release_year
+FROM "netflix_people" people
+LEFT JOIN "netflix_titles_info" titles
+ON people.show_id = titles.show_id
+ORDER BY titles.release_year desc;
+
+/# This query counts how many total movies are in the first table
+SELECT count(*)
+FROM "netflix_titles_info" 
+WHERE type='Movie';
+
+/# This query finds what the most recently added title is
+Select MAX(date(date_added))
+FROM "netflix_titles_info";
+
+/# This query lists the titles in alphabetical order
+SELECT title
+FROM netflix_titles_info
+ORDER BY title asc;
+
+/# This query lists the director for the show "The Starling"
+SELECT director, title
+FROM "netflix_titles_info" titles
+LEFT JOIN "netflix_people" people
+ON titles.show_id = people.show_id
+WHERE titles.title='The Starling';
+
+/# This query lists the title and release year of the newest movie in the dataset
+SELECT title, release_year, type
+FROM netflix_titles_info
+WHERE type = 'Movie'
+ORDER BY release_year asc
+LIMIT 1
+
+/# This query lists the titles of all tv shows released in 2021
+SELECT title, release_year, type
+FROM netflix_titles_info
+WHERE type = 'TV Show'
+AND release_year = 2021
